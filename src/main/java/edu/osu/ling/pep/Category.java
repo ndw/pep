@@ -52,6 +52,7 @@ public class Category {
 	/**
 	 * Creates a new non-terminal category with the specified name.
 	 * @see Category#Category(String, boolean)
+         * @param name The name
 	 */
 	public Category(String name) {
 		this(name, false);

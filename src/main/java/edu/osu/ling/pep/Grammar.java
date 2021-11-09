@@ -103,6 +103,7 @@ public class Grammar {
 	
 	/**
 	 * Gets every rule in this grammar.
+	 * @return The rules in the grammar.
 	 */
 	public Set<Rule> getAllRules() {
 		Set<Rule> allRules = new HashSet<Rule>();

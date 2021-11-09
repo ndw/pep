@@ -42,6 +42,8 @@ public class ParseTree {
 	/**
 	 * Creates a new parse tree with the specified category and parent parse
 	 * tree.
+	 * @param node The category.
+	 * @param parent The parent parse tree.
 	 * @see #ParseTree(Category, ParseTree, ParseTree[])
 	 */
 	public ParseTree(Category node, ParseTree parent) {
@@ -126,7 +128,7 @@ public class ParseTree {
 	
 	/**
 	 * Gets the node category of this parse tree.
-	 * @return <code>NP</code> for a subtree <code>NP -> Det N</code>.
+	 * @return <code>NP</code> for a subtree <code>NP -&gt; Det N</code>.
 	 */
 	public Category getNode() {
 		return node;
@@ -134,7 +136,7 @@ public class ParseTree {
 	
 	/**
 	 * Gets the parent parse tree, if any.
-	 * @return A parse tree containing (for example) <code>S -> NP VP</code>
+	 * @return A parse tree containing (for example) <code>S -&gt; NP VP</code>
 	 * if this parse tree's {@link #getNode() node} is <code>NP</code> and is
 	 * one of the children of <code>S</code>. If this parse tree is the root
 	 * node in a series of parse trees, returns <code>null</code>.
@@ -146,7 +148,7 @@ public class ParseTree {
 	/**
 	 * Gets the child parse trees of this parse tree, retaining their linear
 	 * ordering.
-	 * @return For a subtree <code>NP -> Det N</code>, returns an array
+	 * @return For a subtree <code>NP -&gt; Det N</code>, returns an array
 	 * that contains parse trees whose {@link #getNode() node} is
 	 * <code>Det, N</code> in that order, or <code>null</code> if this parse
 	 * tree has no children.

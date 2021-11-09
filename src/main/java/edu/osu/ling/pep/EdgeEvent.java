@@ -50,6 +50,7 @@ public class EdgeEvent extends ParserEvent {
 
 	/**
 	 * Gets the index where this event occurred.
+	 * @return The index.
 	 */
 	public Integer getIndex() {
 		return index;

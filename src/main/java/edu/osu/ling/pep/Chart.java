@@ -236,7 +236,7 @@ public class Chart {
 	 * @param edge The edge to add.
 	 * @return <code>true</code> iff this chart did not already contain 
 	 * <code>edge</code> at the given index.
-	 * @throws IndexOutOfBoundsException If <code>index < 0</code>.
+	 * @throws IndexOutOfBoundsException If <code>index &lt; 0</code>.
 	 * @throws NullPointerException If <code>index</code> or
 	 * <code>edge</code> is <code>null</code>.
 	 */

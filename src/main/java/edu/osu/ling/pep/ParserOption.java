@@ -39,9 +39,9 @@ public enum ParserOption {
 	 * exists where <code>NP</code> expands to <code>Det N</code>, the parser
 	 * will predict
 	 * <ul>
-	 * 	<li><code>N -> dog</code></li>
-	 * 	<li><code>N -> boy</code></li>
-	 * 	<li><code>N -> man</code></li>
+	 * 	<li><code>N -&gt; dog</code></li>
+	 * 	<li><code>N -&gt; boy</code></li>
+	 * 	<li><code>N -&gt; man</code></li>
 	 * </ul>
 	 * whenever it is able to predict <code>NP</code> (or any other rule that
 	 * can expand to <code>N</code>).
@@ -63,6 +63,7 @@ public enum ParserOption {
 	
 	/**
 	 * Gets the default value for this option.
+	 * @return The default value.
 	 */
 	public Boolean getDefaultValue() {
 		return defaultValue;

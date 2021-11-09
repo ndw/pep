@@ -35,6 +35,7 @@ public class DottedRule extends Rule {
 	 * Creates a new dotted rule for the given rule, with a dot position at
 	 * the beginning of the rule's right side (position <code>0</code>).
 	 * @see DottedRule#DottedRule(Rule, int)
+	 * @param rule The rule.
 	 */
 	public DottedRule(Rule rule) {
 		this(rule, 0);
@@ -152,8 +153,8 @@ public class DottedRule extends Rule {
 
 	/**
 	 * Gets a string representation of this dotted rule.
-	 * @return &quot;<code>S -> NP * VP</code>&quot; for a dotted rule with
-	 * an underlying rule <code>S -> NP VP</code> and a dot position
+	 * @return &quot;<code>S -&gt; NP * VP</code>&quot; for a dotted rule with
+	 * an underlying rule <code>S -&gt; NP VP</code> and a dot position
 	 * <code>1</code>.
 	 * @see Rule#toString()
 	 */

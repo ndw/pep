@@ -34,6 +34,8 @@ public class ParseEvent extends ParserEvent {
 	
 	/**
 	 * Creates a new event concerning the specified parse.
+	 * @param earleyParser The parser.
+	 * @param index The index.
 	 * @param parse The parse in question.
 	 */
 	protected ParseEvent(EarleyParser earleyParser, Integer index,
@@ -53,6 +55,7 @@ public class ParseEvent extends ParserEvent {
 	
 	/**
 	 * Gets the string index where this event occurred.
+	 * @return The index.
 	 */
 	public Integer getIndex() {
 		return index;

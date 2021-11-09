@@ -30,7 +30,7 @@ import java.util.Set;
  * <p>
  * Edges can be created by {@link Edge#predictFor(Rule, int) prediction} based
  * on a {@link Grammar#getRules(Category) grammar rule}, or by
- * {@link Edge#scan(Edge, String) scanning} an input token that matches the
+ * {@link Edge#scan(Edge, String, boolean) scanning} an input token that matches the
  * {@link DottedRule#getActiveCategory() active category} of some edge's dotted rule.
  * An edge can also be {@link #complete(Edge, Edge) completed} based on another
  * edge, allowing {@link ParseTree parse trees} to trace the derivation of a
@@ -69,6 +69,8 @@ public class Edge {
 	/**
 	 * Creates an edge for the specified dotted rule and origin position, with
 	 * the given set of edges as bases for its completion.
+	 * @param dottedRule The rule.
+	 * @param origin The origin.
 	 * @param bases The set of bases, in order, that completed this edge. If
 	 * this is <code>null</code>, {@link Collections#emptySet() the empty set}
 	 * is used.
@@ -114,7 +116,7 @@ public class Edge {
 	 * @param token The token to scan.
 	 * @param ignoreCase Whether to take case into account when comparing.
 	 * @return true iff this edge is {@link Edge#isPassive() active}, its {@link Edge#getDottedRule() dotted rule}'s
-	 * {@link DottedRule#getActiveCategory active category} is {@link Rule#isTerminal() terminal}, and the token matches
+	 * {@link DottedRule#getActiveCategory active category} is terminal, and the token matches
 	 * (modulo case sensitivity signalled by <code>ignoreCase</code>) the name of the {@link Category#getName() name} of
 	 * the dotted rule's active category.
 	 * @see Edge#scan(Edge, String, boolean)
@@ -135,6 +137,7 @@ public class Edge {
 	 * scanned. 
 	 * @param edge The edge whose active category is the just-scanned token.
 	 * @param token The just-scanned token.
+	 * @param ignoreCase Ignore case.
 	 * @return A new edge just like the specified edge (including
 	 * {@link #getOrigin() origin}), but with its rule's
 	 * {@link DottedRule#getPosition() dot position} advanced by one. The new
@@ -179,6 +182,7 @@ public class Edge {
 	/**
 	 * Tests whether this edge can be used as a basis edge for completing a specified edge.
 	 * @param toComplete The edge that would be completed based on this edge.
+	 * @return True if it can complete.
 	 * @see Edge#complete(Edge, Edge)
 	 * TODO add (a)since tag
 	 */
@@ -319,8 +323,8 @@ public class Edge {
 
 	/**
 	 * Gets a string representation of this edge.
-	 * @return &quot;0[S -> NP * VP]&quot; for an edge at origin <code>0</code>
-	 * and dotted rule <code>S -> NP * VP</code>.
+	 * @return &quot;0[S -&gt; NP * VP]&quot; for an edge at origin <code>0</code>
+	 * and dotted rule <code>S -&gt; NP * VP</code>.
 	 * @see DottedRule#toString()
 	 */
 	@Override

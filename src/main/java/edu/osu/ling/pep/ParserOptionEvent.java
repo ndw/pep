@@ -39,6 +39,7 @@ public class ParserOptionEvent extends ParserEvent {
 
 	/**
 	 * Gets the option that was set.
+	 * @return The option.
 	 */
 	public ParserOption getOption() {
 		return option;
@@ -46,6 +47,7 @@ public class ParserOptionEvent extends ParserEvent {
 
 	/**
 	 * Gets the value that was set for the option.
+	 * @return The value.
 	 */
 	public Boolean getValue() {
 		return value;

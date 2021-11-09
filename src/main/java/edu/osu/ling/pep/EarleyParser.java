@@ -42,11 +42,11 @@ import java.util.Set;
  * <p>
  * For example, if a grammar contains the following {@link Rule rules}:
  * <ul>
- * 	<li><code>S -> NP VP</code></li>
- * 	<li><code>NP -> Det N</code></li>
- * 	<li><code>Det -> the</code></li>
- * 	<li><code>N -> boy</code></li>
- * 	<li><code>VP -> left</code></li>
+ * 	<li><code>S -&gt; NP VP</code></li>
+ * 	<li><code>NP -&gt; Det N</code></li>
+ * 	<li><code>Det -&gt; the</code></li>
+ * 	<li><code>N -&gt; boy</code></li>
+ * 	<li><code>VP -&gt; left</code></li>
  * </ul>
  * parses can be requested for category <code>S</code>
  * (&quot;<code>the boy left</code>&quot;) but also for category <code>NP</code>
@@ -79,6 +79,7 @@ public class EarleyParser {
 	
 	/**
 	 * Creates a new Earley parser for the specified grammar.
+	 * @param grammar The grammar.
 	 * @see #EarleyParser(Grammar, ParserListener)
 	 */
 	public EarleyParser(Grammar grammar) {
@@ -112,6 +113,7 @@ public class EarleyParser {
 	 * @throws IllegalArgumentException If a <code>null</code> grammar is
 	 * provided.
 	 * @since 0.2
+	 * @param grammar The grammar.
 	 */
 	public void setGrammar(Grammar grammar) {
 		if(grammar == null) {
@@ -214,6 +216,9 @@ public class EarleyParser {
 	/**
 	 * Convenience method for recognizing a string of tokens separated by spaces.
 	 * @param tokens The string of tokens to recognize.
+	 * @param seed The seed category.
+	 * @return The status of the recognition.
+	 * @throws PepException If it fails.
 	 * @see #recognize(String, String, Category)
 	 * @since 0.4
 	 */
@@ -227,6 +232,9 @@ public class EarleyParser {
 	 * spaces.
 	 * @param tokens The string of tokens to recognize.
 	 * @param separator The separator in the token string.
+	 * @param seed The seed category.
+	 * @return The recogition status.
+	 * @throws PepException If it fails.
 	 * @see #recognize(Iterable, Category)
 	 * @since 0.4
 	 */
@@ -244,6 +252,7 @@ public class EarleyParser {
 	 * @return {@link Status#ACCEPT} if the string is recognized, 
 	 * {@link Status#REJECT} if the string is rejected, and {@link Status#ERROR}
 	 * if an error occurred during parsing.
+	 * @throws PepException If it fails.
 	 * @see #parse(Iterable, Category)
 	 * @see Parse#getStatus()
 	 */
@@ -255,6 +264,9 @@ public class EarleyParser {
 	/**
 	 * Convenience method for parsing a string of tokens separated by spaces.
 	 * @param tokens The string of tokens to parse.
+	 * @param seed The seed category.
+	 * @return The parse.
+	 * @throws PepException If it fails.
 	 * @see #parse(String, String, Category)
 	 * @since 0.4
 	 */
@@ -268,6 +280,9 @@ public class EarleyParser {
 	 * specified string.
 	 * @param tokens The string of tokens to parse.
 	 * @param separator The separator in the token string.
+	 * @param seed The seed category.
+	 * @return The parse.
+	 * @throws PepException If it fails.
 	 * @see #parse(Iterable, Category)
 	 * @since 0.4
 	 */

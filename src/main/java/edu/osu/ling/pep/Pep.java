@@ -54,7 +54,7 @@ import org.xml.sax.SAXParseException;
  * In addition to tokenizing input strings and loading the {@link Grammar} that
  * a parser will use, Pep also a {@link ParserListener listens} for events
  * from the Earley parsers it invokes. An example invocation might be something
- * like:
+ * like:</p>
  * 	<ol>
  * 		<li>
  * 			<code>pep -g samples/miniscule.xml -s S the boy left -v</code>
@@ -64,8 +64,7 @@ import org.xml.sax.SAXParseException;
  * 			</code>
  * 		</li>
  *  </ol>
- * 	</blockquote>
- * The above commands cause Pep to create an Earley parser using the
+ * <p>The above commands cause Pep to create an Earley parser using the
  * grammar specified in the file <code>samples/miniscule.xml</code> for the
  * {@link Parse#getSeed() seed category} <code>S</code> and the input 
  * string &quot;<code>the boy left</code>&quot;. Example (2) shows how to 

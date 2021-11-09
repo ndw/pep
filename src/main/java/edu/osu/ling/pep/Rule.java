@@ -68,6 +68,7 @@ public class Rule {
 	
 	/**
 	 * Gets the left side category of this rule.
+         * @return The left side
 	 */
 	public Category getLeft() {
 		return left;
@@ -75,6 +76,7 @@ public class Rule {
 	
 	/**
 	 * Gets the series of categories on the right side of this rule.
+         * @return The right side
 	 */
 	public Category[] getRight() {
 		return right;
@@ -103,6 +105,7 @@ public class Rule {
 	 * @see #isPreterminal()
 	 * @see #getRight()
 	 * @since 0.4
+	 * @return True if the preterminal is a singleton.
 	 */
 	public boolean isSingletonPreterminal() {
 		return (isPreterminal() && right.length == 1);
@@ -136,7 +139,7 @@ public class Rule {
 
 	/**
 	 * Gets a string representation of this rule.
-	 * @return &quot;<code>S -> NP VP</code>&quot; for a rule with a left side
+	 * @return &quot;<code>S -&gt; NP VP</code>&quot; for a rule with a left side
 	 * category of <code>S</code> and a right side sequence
 	 * <code>[NP, VP]</code>.
 	 * @see Category#toString()

@@ -73,6 +73,7 @@ public class Parse {
 	
 	/**
 	 * Gets the tokens parsed.
+	 * @return The tokens parsed.
 	 */
 	public List<String> getTokens() {
 		return Collections.unmodifiableList(tokens);
@@ -80,13 +81,15 @@ public class Parse {
 	
 	/**
 	 * Gets the seed category for this parse.
+	 * @return The seed category.
 	 */
 	public Category getSeed() {
 		return seed;
 	}
 	
 	/**
-	 * Gets the completed chart for this parse. 
+	 * Gets the completed chart for this parse.
+	 * @return The chart.
 	 */
 	public Chart getChart() {
 		return chart;
@@ -199,9 +202,9 @@ public class Parse {
 	 * position <code>1</code> and index <code>4</code>. This is because the
 	 * derived <code>VP</code> categories for <em>saw her duck</em> both start
 	 * at <code>1</code> and end at <code>4</code>. To retrieve these subtrees
-	 * from the parse, use
-	 * <blockquote><code>Parse.getParseTreesFor(VP, 1, 4)<code></blockquote>
-	 * where <code>VP</code> represents an instance of {@link Category} whose
+	 * from the parse, use</p>
+	 * <blockquote><code>Parse.getParseTreesFor(VP, 1, 4)</code></blockquote>
+	 * <p>where <code>VP</code> represents an instance of {@link Category} whose
 	 * {@link Category#getName() name} is &quot;VP&quot;.
 	 * </p>
 	 * @param category The category of the parse tree's
@@ -264,7 +267,7 @@ public class Parse {
 
 	/**
 	 * Gets a string representation of this parse.
-	 * @return &quot;<code>ACCEPT: S -> [the, boy, left] (1)</code>&quot; for an 
+	 * @return &quot;<code>ACCEPT: S -&gt; [the, boy, left] (1)</code>&quot; for an
 	 * {@link #getStatus() accepted} parse of &quot;the boy left&quot; with
 	 * seed category <code>S</code> and one possible {@link #getParseTrees parse
 	 * tree}.
