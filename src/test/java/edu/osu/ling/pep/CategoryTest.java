@@ -10,7 +10,7 @@
  */
 package edu.osu.ling.pep;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 
 /**

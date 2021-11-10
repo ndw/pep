@@ -10,10 +10,10 @@
  */
 package edu.osu.ling.pep;
 
+import org.junit.Assert;
+
 import java.util.HashSet;
 import java.util.Set;
-
-import junit.framework.Assert;
 
 /**
  * @author <a href="http://www.ling.osu.edu/~scott/">Scott Martin</a>

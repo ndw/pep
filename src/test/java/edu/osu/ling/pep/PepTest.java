@@ -13,7 +13,7 @@ package edu.osu.ling.pep;
 import java.io.IOException;
 import java.util.EnumMap;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 
 /**

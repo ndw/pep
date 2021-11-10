@@ -13,7 +13,7 @@ package edu.osu.ling.pep;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  * @author <a href="http://www.ling.osu.edu/~scott/">Scott Martin</a>

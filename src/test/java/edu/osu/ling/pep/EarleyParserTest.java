@@ -19,7 +19,7 @@ import static edu.osu.ling.pep.Status.REJECT;
 import java.util.Arrays;
 import java.util.Set;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 
 /**

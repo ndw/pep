@@ -12,7 +12,7 @@ package edu.osu.ling.pep;
 
 import java.util.Arrays;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 
 
