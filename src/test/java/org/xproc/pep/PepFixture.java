@@ -10,10 +10,11 @@
  */
 package org.xproc.pep;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import junit.framework.TestCase;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -23,6 +24,7 @@ import junit.framework.TestCase;
 public abstract class PepFixture extends TestCase {
 	Grammar grammar, mixed;
 	Category A, B, C, D, E, X, Y, Z, a, b;
+	Category Vowel, Vowels, Consonant, Consonants, Zero_to_Nine;
 	Category seed, S, NP, VP, Det, N, the, boy, girl, left;
 	Rule rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8;
 	Edge edge1, edge2, edge3;
@@ -42,7 +44,13 @@ public abstract class PepFixture extends TestCase {
 		Z = new Category("Z", false);
 		a = new Category("a", true);
 		b = new Category("b", true);
-		
+
+		Vowel = new CategorySet("Vowel", Arrays.asList("A", "E", "I", "O", "U"));
+		Vowels = new CategorySet("Vowels", Arrays.asList("A", "E", "I", "O", "U"), false, true);
+		Consonant = new CategorySet("Consonant", Arrays.asList("A", "E", "I", "O", "U"), true, false);
+		Consonants = new CategorySet("Consonants", Arrays.asList("A", "E", "I", "O", "U"), true, true);
+		Zero_to_Nine = new CategorySet("Zero_to_Nine", Arrays.asList("0","1","2","3","4","5","6","7","8","9"));
+
 		rule1 = new Rule(A, B, C, D, E);
 		rule2 = new Rule(A, a);
 		rule3 = new Rule(X, Y, Z);

@@ -33,6 +33,7 @@ package org.xproc.pep;
 public class Category {
 	String name;
 	boolean terminal;
+	boolean repeatable;
 	
 	/**
 	 * Special start category for seeding Earley parsers. 
@@ -67,6 +68,19 @@ public class Category {
 	 * <code>null</code> or zero-length.
 	 */
 	public Category(String name, boolean terminal) {
+		this(name, terminal, false);
+	}
+
+	/**
+	 * Creates a new category <code>name</code> with the specified terminal
+	 * status.
+	 * @param name The name for this category.
+	 * @param terminal Whether or not this category is a terminal.
+	 * @param repeatable Whether or not this category can be repeated.
+	 * @throws IllegalArgumentException If <code>name</code> is
+	 * <code>null</code> or zero-length.
+	 */
+	public Category(String name, boolean terminal, boolean repeatable) {
 		if(!terminal && (name == null || name.length() == 0)) {
 			throw new IllegalArgumentException(
 					"empty name specified for category");
@@ -74,6 +88,7 @@ public class Category {
 		
 		this.name = name;
 		this.terminal = terminal;
+		this.repeatable = repeatable;
 	}
 	
 	/**
@@ -95,6 +110,15 @@ public class Category {
 	}
 
 	/**
+	 * Gets the repeatable status of this category.
+	 * @return The repeatable status specified for this category upon
+	 * construction.
+	 */
+	public boolean isRepeatable() {
+		return repeatable;
+	}
+
+	/**
 	 * Tests whether this category is equal to another.
 	 * @return <code>true</code> iff the specified object is an instance
 	 * of <code>Category</code> and its name and terminal status are equal
@@ -109,6 +133,16 @@ public class Category {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Tests whether a given token matches this category.
+	 * @param token The input token.
+	 * @param ignoreCase Should case be ignored?
+	 * @return <code>true</code> iff the token is considered a match for this category.
+	 */
+	public boolean matches(String token, boolean ignoreCase) {
+		return name.equals(token) || (ignoreCase && name.equalsIgnoreCase(token));
 	}
 
 	/**

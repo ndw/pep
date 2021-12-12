@@ -131,9 +131,7 @@ public class Grammar {
 			boolean ignoreCase) {
 		if(rules.containsKey(left)) {
 			for(Rule r : rules.get(left)) {
-				if(r.isSingletonPreterminal() && (r.right[0].name.equals(token)
-					|| (ignoreCase
-							&& r.right[0].name.equalsIgnoreCase(token)))) {
+				if(r.isSingletonPreterminal() && r.right[0].matches(token, ignoreCase)) {
 					return r;
 				}
 			}

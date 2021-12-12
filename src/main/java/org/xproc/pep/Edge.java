@@ -127,9 +127,7 @@ public class Edge {
 			return false;
 		}
 
-		return ignoreCase
-			? dottedRule.activeCategory.name.equalsIgnoreCase(token)
-			: dottedRule.activeCategory.name.equals(token);
+		return dottedRule.activeCategory.matches(token, ignoreCase);
 	}
 	
 	/**

@@ -457,6 +457,11 @@ public class EarleyParser {
 					if(chart.addEdge(successor, newEdge)) {
 						fireEdgeScanned(successor, newEdge);
 					}
+					if (edge.dottedRule.activeCategory.isRepeatable()) {
+						if(chart.addEdge(successor, edge)) {
+							fireEdgeScanned(successor, newEdge);
+						}
+					}
 				}
 			}
 		}
