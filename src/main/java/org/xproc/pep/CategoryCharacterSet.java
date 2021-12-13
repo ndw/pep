@@ -1,5 +1,6 @@
 package org.xproc.pep;
 
+import java.util.Collections;
 import java.util.List;
 
 public class CategoryCharacterSet extends Category {
@@ -12,16 +13,32 @@ public class CategoryCharacterSet extends Category {
         this.inclusion = inclusion;
     }
 
+    public static CategoryCharacterSet inclusion(String name, CharacterSet range) {
+        return new CategoryCharacterSet(name, Collections.singletonList(range), true, false);
+    }
+
     public static CategoryCharacterSet inclusion(String name, List<CharacterSet> ranges) {
         return new CategoryCharacterSet(name, ranges, true, false);
+    }
+
+    public static CategoryCharacterSet inclusion(String name, CharacterSet range, boolean repeatable) {
+        return new CategoryCharacterSet(name, Collections.singletonList(range), true, repeatable);
     }
 
     public static CategoryCharacterSet inclusion(String name, List<CharacterSet> ranges, boolean repeatable) {
         return new CategoryCharacterSet(name, ranges, true, repeatable);
     }
 
+    public static CategoryCharacterSet exclusion(String name, CharacterSet range) {
+        return new CategoryCharacterSet(name, Collections.singletonList(range), false, false);
+    }
+
     public static CategoryCharacterSet exclusion(String name, List<CharacterSet> ranges) {
         return new CategoryCharacterSet(name, ranges, false, false);
+    }
+
+    public static CategoryCharacterSet exclusion(String name, CharacterSet range, boolean repeatable) {
+        return new CategoryCharacterSet(name, Collections.singletonList(range), false, repeatable);
     }
 
     public static CategoryCharacterSet exclusion(String name, List<CharacterSet> ranges, boolean repeatable) {
