@@ -3,18 +3,29 @@ package org.xproc.pep;
 import java.util.List;
 
 public class CategoryCharacterSet extends Category {
-    private final List<CharacterRange> ranges;
+    private final List<CharacterSet> ranges;
+    private final boolean inclusion;
 
-    // FIXME: don't store ranges that are wholly subsumed by other ranges.
-
-    public CategoryCharacterSet(String name, List<CharacterRange> ranges, boolean repeatable) {
+    private CategoryCharacterSet(String name, List<CharacterSet> ranges, boolean inclusion, boolean repeatable) {
         super(name, true, repeatable);
         this.ranges = ranges;
+        this.inclusion = inclusion;
     }
 
-    public CategoryCharacterSet(String name, List<CharacterRange> ranges) {
-        super(name, true, false);
-        this.ranges = ranges;
+    public static CategoryCharacterSet inclusion(String name, List<CharacterSet> ranges) {
+        return new CategoryCharacterSet(name, ranges, true, false);
+    }
+
+    public static CategoryCharacterSet inclusion(String name, List<CharacterSet> ranges, boolean repeatable) {
+        return new CategoryCharacterSet(name, ranges, true, repeatable);
+    }
+
+    public static CategoryCharacterSet exclusion(String name, List<CharacterSet> ranges) {
+        return new CategoryCharacterSet(name, ranges, false, false);
+    }
+
+    public static CategoryCharacterSet exclusion(String name, List<CharacterSet> ranges, boolean repeatable) {
+        return new CategoryCharacterSet(name, ranges, false, repeatable);
     }
 
     /**
@@ -29,12 +40,12 @@ public class CategoryCharacterSet extends Category {
             CategoryCharacterSet oc = (CategoryCharacterSet)obj;
             if (oc != Category.START &&
                     terminal == oc.terminal && name.equals(oc.name)) {
-                for (CharacterRange range : ranges) {
+                for (CharacterSet range : ranges) {
                     if (!oc.ranges.contains(range)) {
                         return false;
                     }
                 }
-                for (CharacterRange range : oc.ranges) {
+                for (CharacterSet range : oc.ranges) {
                     if (!ranges.contains(range)) {
                         return false;
                     }
@@ -61,12 +72,14 @@ public class CategoryCharacterSet extends Category {
         if (ignoreCase) {
             cp = Character.toUpperCase(cp);
         }
-        for (CharacterRange range : ranges) {
-            boolean found = cp >= range.getFirst() && cp <= range.getLast();
+        for (CharacterSet range : ranges) {
+            boolean found = false;
             if (ignoreCase) {
-                found = cp >= Character.toUpperCase(range.getFirst()) && cp <= Character.toUpperCase(range.getLast());
+                found = range.matches(Character.toUpperCase(cp)) || range.matches(Character.toLowerCase(cp));
+            } else {
+                found = range.matches(cp);
             }
-            if ((found && !range.getNegated()) || (!found && range.getNegated())) {
+            if ((found && inclusion) || (!found && !inclusion)) {
                 return true;
             }
         }
@@ -77,16 +90,19 @@ public class CategoryCharacterSet extends Category {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{");
+        if (!inclusion) {
+            sb.append("~");
+        }
+        sb.append("[");
         boolean first = true;
-        for (CharacterRange range : ranges) {
+        for (CharacterSet range : ranges) {
             if (!first) {
-                sb.append(",");
+                sb.append(";");
             }
             first = false;
             sb.append(range);
         }
-        sb.append("}");
+        sb.append("]");
         return sb.toString();
     }
 }

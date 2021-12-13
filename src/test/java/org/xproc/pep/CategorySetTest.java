@@ -3,7 +3,6 @@ package org.xproc.pep;
 import org.junit.Assert;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -50,11 +49,10 @@ public class CategorySetTest extends PepFixture {
     public void testCharacterRanges() {
         Grammar grammar = new Grammar("charranges");
 
-        CharacterRange upperAlpha = new CharacterRange('A', 'Z');
-        CharacterRange lowerAlpha = new CharacterRange('a', 'z');
-        CategoryCharacterSet alphas = new CategoryCharacterSet("alpha", Arrays.asList(upperAlpha, lowerAlpha), true);
-
-        CategoryCharacterSet digits = new CategoryCharacterSet("digits", Collections.singletonList(new CharacterRange('0', '9')));
+        CharacterSet upperAlpha = CharacterSet.range('A', 'Z');
+        CharacterSet lowerAlpha = CharacterSet.range('a', 'z');
+        CategoryCharacterSet alphas = CategoryCharacterSet.inclusion("alpha", Arrays.asList(upperAlpha, lowerAlpha), true);
+        CategoryCharacterSet digits = CategoryCharacterSet.inclusion("digits", Collections.singletonList(CharacterSet.range('0', '9')));
 
         Category digitLettersDigit = new Category("dld");
 
