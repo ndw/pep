@@ -5,25 +5,25 @@ import java.util.Collections;
 
 public class CategoryCharacterSetTest extends PepFixture {
     public void testEquality() {
-        CharacterRange alpha = new CharacterRange('A', 'Z');
-        CharacterRange digits = new CharacterRange('0', '9');
-        CategoryCharacterSet set1 = new CategoryCharacterSet("test", Arrays.asList(alpha, digits));
-        CategoryCharacterSet set2 = new CategoryCharacterSet("test", Arrays.asList(digits, alpha));
+        CharacterSet alpha = CharacterSet.range('A', 'Z');
+        CharacterSet digits = CharacterSet.range('0', '9');
+        CategoryCharacterSet set1 = CategoryCharacterSet.inclusion("test", Arrays.asList(alpha, digits));
+        CategoryCharacterSet set2 = CategoryCharacterSet.inclusion("test", Arrays.asList(digits, alpha));
         assertTrue(set1.equals(set2));
     }
 
     public void testInequality() {
-        CharacterRange alpha = new CharacterRange('A', 'Z');
-        CharacterRange digits = new CharacterRange('0', '9');
-        CategoryCharacterSet set1 = new CategoryCharacterSet("test", Arrays.asList(alpha));
-        CategoryCharacterSet set2 = new CategoryCharacterSet("test", Arrays.asList(digits));
+        CharacterSet alpha = CharacterSet.range('A', 'Z');
+        CharacterSet digits = CharacterSet.range('0', '9');
+        CategoryCharacterSet set1 = CategoryCharacterSet.inclusion("test", Arrays.asList(alpha));
+        CategoryCharacterSet set2 = CategoryCharacterSet.inclusion("test", Arrays.asList(digits));
         assertFalse(set1.equals(set2));
     }
 
     public void testMatchesInRange() {
-        CharacterRange alpha = new CharacterRange('A', 'Z');
-        CharacterRange digits = new CharacterRange('0', '9');
-        CategoryCharacterSet set1 = new CategoryCharacterSet("test", Arrays.asList(digits, alpha));
+        CharacterSet alpha = CharacterSet.range('A', 'Z');
+        CharacterSet digits = CharacterSet.range('0', '9');
+        CategoryCharacterSet set1 = CategoryCharacterSet.inclusion("test", Arrays.asList(digits, alpha));
         assertTrue(set1.matches("A", false));
         assertTrue(set1.matches("M", false));
         assertTrue(set1.matches("Z", false));
@@ -35,8 +35,8 @@ public class CategoryCharacterSetTest extends PepFixture {
     }
 
     public void testMatchesNotInRange() {
-        CharacterRange alpha = new CharacterRange('A', 'Z', true);
-        CategoryCharacterSet set1 = new CategoryCharacterSet("test", Collections.singletonList(alpha));
+        CharacterSet alpha = CharacterSet.range('A', 'Z');
+        CategoryCharacterSet set1 = CategoryCharacterSet.exclusion("test", Arrays.asList(alpha));
         assertFalse(set1.matches("A", false));
         assertFalse(set1.matches("M", false));
         assertFalse(set1.matches("Z", false));
@@ -48,9 +48,9 @@ public class CategoryCharacterSetTest extends PepFixture {
     }
 
     public void testMatchesIgnoreCase() {
-        CharacterRange alpha = new CharacterRange('A', 'Z');
-        CharacterRange digits = new CharacterRange('0', '9');
-        CategoryCharacterSet set1 = new CategoryCharacterSet("test", Arrays.asList(digits, alpha));
+        CharacterSet alpha = CharacterSet.range('A', 'Z');
+        CharacterSet digits = CharacterSet.range('0', '9');
+        CategoryCharacterSet set1 = CategoryCharacterSet.inclusion("test", Arrays.asList(digits, alpha));
         assertTrue(set1.matches("a", true));
         assertTrue(set1.matches("m", true));
         assertTrue(set1.matches("z", true));
