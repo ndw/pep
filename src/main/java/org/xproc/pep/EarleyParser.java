@@ -447,20 +447,25 @@ public class EarleyParser {
 					}
 				}
 			}
-			
+
 			for(Edge edge : edges.toArray(new Edge[edges.size()])) {
 				// completions for active edges only
-				if(edge.canScan(token, ignoreCase)) {
-					Edge newEdge = Edge.scan(edge, token, ignoreCase);
-					Integer successor // save next index
-						= new Integer(index.intValue() + 1); 
-					if(chart.addEdge(successor, newEdge)) {
-						fireEdgeScanned(successor, newEdge);
-					}
-					if (edge.dottedRule.activeCategory.isRepeatable()) {
-						if(chart.addEdge(successor, edge)) {
+				// when considering an edge, if it is currently positioned at an optional
+				// category, also consider the edge where that optional cateogry has been skipped.
+				boolean skipOptional = true;
+				Edge thisEdge = edge;
+				while (skipOptional) {
+					if(thisEdge.canScan(token, ignoreCase)) {
+						Edge newEdge = Edge.scan(thisEdge, token, ignoreCase);
+						Integer successor // save next index
+								= new Integer(index.intValue() + 1);
+						if(chart.addEdge(successor, newEdge)) {
 							fireEdgeScanned(successor, newEdge);
 						}
+					}
+					skipOptional = thisEdge.atOptionalCategory();
+					if (skipOptional) {
+						thisEdge = Edge.skipOptionalToken(thisEdge);
 					}
 				}
 			}
@@ -498,6 +503,18 @@ public class EarleyParser {
 									// if the chart did not already contain this edge
 									fireEdgeCompleted(index, newEdge);									
 									completeStack.push(newEdge);
+								}
+
+								// if the new edge is positioned at an optional category, also consider
+								// the edge where that optional category has been skipped.
+								while (newEdge.atOptionalCategory()) {
+									newEdge = Edge.skipOptionalToken(newEdge);
+									if(chart.addEdge(index, newEdge)) {
+										// only notify and recursively complete
+										// if the chart did not already contain this edge
+										fireEdgeCompleted(index, newEdge);
+										completeStack.push(newEdge);
+									}
 								}
 							}
 						}
