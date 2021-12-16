@@ -1,48 +1,143 @@
+/*
+ * Copyright (C) 2021 Norman Walsh
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version. The GNU Lesser General Public License is
+ * distributed with this software in the file COPYING.
+ */
 package org.xproc.pep;
 
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A special kind of {@link Category category} that represents sets of characters.
+ *
+ * <p>This extension allows PEP to recognize ranges of Unicode characters.</p>
+ *
+ * <p>Where a simple terminal {@link Category} matches only a single token, the
+ * <code>CategoryCharacterClass</code> matches any character that satisfies a range.
+ * For example, you could make a character set that matched any
+ * of the digits from 0 to 9 or any vowel.</p>
+ *
+ * <p>Character sets are composed from a union of {@link CharacterSet} ranges.</p>
+ *
+ * <p>A set can be an <em>inclusion</em>, where it matches any character that appears
+ * in any range, or an <em>exclusion</em>, where it matches any character that does
+ * not appear in <em>any</em> range.</p>
+ *
+ * <p>For example, given <code>letters</code>, a range representing any Unicode character
+ * in the "letter" class, and <code>digits</code>, a range representing the digits "0" to "9", inclusive:</p>
+ * <ul>
+ *     <li><code>CategoryCharacterSet.inclusion("letters", letters)</code> matches any letter.</li>
+ *     <li><code>CategoryCharacterSet.exclusion("not-letters", letters)</code> matches any character
+ *     that is not a letter.</li>
+ *     <li><code>CategoryCharacterSet.inclusion("letters-or-digits", Arrays.asList(letters, digits)</code> matches
+ *     any letter or digit.</li>
+ * </ul>
+ *
+ * <p>If you ask whether a single character matches a set, the answer is obvious. If you ask whether a string
+ * of characters matches, it's less obvious. At present, this class takes the position that any token
+ * of more than one Unicode code point <em>does not match</em> any set. An alternative would be to say that
+ * it matches if each and all of its characters match. Please raise an issue or a pull-request if you'd prefer
+ * that interpretation. I don't feel strongly about it.</p>
+ */
+
 public class CategoryCharacterSet extends Category {
     private final List<CharacterSet> ranges;
     private final boolean inclusion;
 
-    private CategoryCharacterSet(String name, List<CharacterSet> ranges, boolean inclusion, boolean repeatable) {
-        super(name, true, repeatable);
+    private CategoryCharacterSet(String name, List<CharacterSet> ranges, boolean inclusion, boolean optional) {
+        super(name, true, optional);
         this.ranges = ranges;
         this.inclusion = inclusion;
     }
 
+    /**
+     * Construct a category for the given range.
+     * <p>This is a convenience class for the case where you want to match a single range.</p>
+     * @param name The name of the category.
+     * @param range The range.
+     * @return A character set {@link Category} that matches any character in that range.
+     */
     public static CategoryCharacterSet inclusion(String name, CharacterSet range) {
         return new CategoryCharacterSet(name, Collections.singletonList(range), true, false);
     }
 
+    /**
+     * Construct a category for the given set of ranges.
+     * @param name The name of the category.
+     * @param ranges The ranges.
+     * @return A character set {@link Category} that matches any character in any range.
+     */
     public static CategoryCharacterSet inclusion(String name, List<CharacterSet> ranges) {
         return new CategoryCharacterSet(name, ranges, true, false);
     }
 
-    public static CategoryCharacterSet inclusion(String name, CharacterSet range, boolean repeatable) {
-        return new CategoryCharacterSet(name, Collections.singletonList(range), true, repeatable);
+    /**
+     * Construct a category for an optional character in the given range.
+     * <p>This is a convenience class for the case where you want to match a single range.</p>
+     * @param name The name of the category.
+     * @param range The range.
+     * @return A character set {@link Category} that optionally matches any character in that range.
+     */
+    public static CategoryCharacterSet inclusion(String name, CharacterSet range, boolean optional) {
+        return new CategoryCharacterSet(name, Collections.singletonList(range), true, optional);
     }
 
-    public static CategoryCharacterSet inclusion(String name, List<CharacterSet> ranges, boolean repeatable) {
-        return new CategoryCharacterSet(name, ranges, true, repeatable);
+    /**
+     * Construct a category for an optional character in the given range.
+     * <p>This is a convenience class for the case where you want to match a single range.</p>
+     * @param name The name of the category.
+     * @param ranges The ranges.
+     * @return A character set {@link Category} that optionally matches any character in that range.
+     */
+    public static CategoryCharacterSet inclusion(String name, List<CharacterSet> ranges, boolean optional) {
+        return new CategoryCharacterSet(name, ranges, true, optional);
     }
 
+    /**
+     * Construct a category excluding the given range.
+     * <p>This is a convenience class for the case where you want to match a single range.</p>
+     * @param name The name of the category.
+     * @param range The range.
+     * @return A character set {@link Category} that matches any character <em>not</em> in the range.
+     */
     public static CategoryCharacterSet exclusion(String name, CharacterSet range) {
         return new CategoryCharacterSet(name, Collections.singletonList(range), false, false);
     }
 
+    /**
+     * Construct a category excluding the given range.
+     * @param name The name of the category.
+     * @param ranges The range.
+     * @return A character set {@link Category} that matches any character <em>not</em> in the range.
+     */
     public static CategoryCharacterSet exclusion(String name, List<CharacterSet> ranges) {
         return new CategoryCharacterSet(name, ranges, false, false);
     }
 
-    public static CategoryCharacterSet exclusion(String name, CharacterSet range, boolean repeatable) {
-        return new CategoryCharacterSet(name, Collections.singletonList(range), false, repeatable);
+    /**
+     * Construct a category for an optional character excluded from the given range.
+     * <p>This is a convenience class for the case where you want to match a single range.</p>
+     * @param name The name of the category.
+     * @param range The range.
+     * @return A character set {@link Category} that matches any character <em>not</em> in the range.
+     */
+    public static CategoryCharacterSet exclusion(String name, CharacterSet range, boolean optional) {
+        return new CategoryCharacterSet(name, Collections.singletonList(range), false, optional);
     }
 
-    public static CategoryCharacterSet exclusion(String name, List<CharacterSet> ranges, boolean repeatable) {
-        return new CategoryCharacterSet(name, ranges, false, repeatable);
+    /**
+     * Construct a category for an optional character excluded from the given range.
+     * @param name The name of the category.
+     * @param ranges The range.
+     * @return A character set {@link Category} that matches any character <em>not</em> in the range.
+     */
+    public static CategoryCharacterSet exclusion(String name, List<CharacterSet> ranges, boolean optional) {
+        return new CategoryCharacterSet(name, ranges, false, optional);
     }
 
     /**

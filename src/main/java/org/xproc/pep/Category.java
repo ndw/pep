@@ -33,7 +33,7 @@ package org.xproc.pep;
 public class Category {
 	String name;
 	boolean terminal;
-	boolean repeatable;
+	boolean optional;
 	
 	/**
 	 * Special start category for seeding Earley parsers. 
@@ -76,11 +76,11 @@ public class Category {
 	 * status.
 	 * @param name The name for this category.
 	 * @param terminal Whether or not this category is a terminal.
-	 * @param repeatable Whether or not this category can be repeated.
+	 * @param optional Whether or not this category can be repeated.
 	 * @throws IllegalArgumentException If <code>name</code> is
 	 * <code>null</code> or zero-length.
 	 */
-	public Category(String name, boolean terminal, boolean repeatable) {
+	public Category(String name, boolean terminal, boolean optional) {
 		if(!terminal && (name == null || name.length() == 0)) {
 			throw new IllegalArgumentException(
 					"empty name specified for category");
@@ -88,9 +88,9 @@ public class Category {
 		
 		this.name = name;
 		this.terminal = terminal;
-		this.repeatable = repeatable;
+		this.optional = optional;
 	}
-	
+
 	/**
 	 * Gets the name of this category.
 	 * @return The value specified for this category's name when it was
@@ -110,12 +110,12 @@ public class Category {
 	}
 
 	/**
-	 * Gets the repeatable status of this category.
-	 * @return The repeatable status specified for this category upon
+	 * Gets the optional status of this category.
+	 * @return The optional status specified for this category upon
 	 * construction.
 	 */
-	public boolean isRepeatable() {
-		return repeatable;
+	public boolean isOptional() {
+		return optional;
 	}
 
 	/**

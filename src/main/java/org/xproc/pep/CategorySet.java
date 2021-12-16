@@ -1,28 +1,80 @@
+/*
+ * Copyright (C) 2021 Norman Walsh
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version. The GNU Lesser General Public License is
+ * distributed with this software in the file COPYING.
+ */
 package org.xproc.pep;
 
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * A special kind of {@link Category category} that represents sets of tokens.
+ *
+ * <p>This extension allows PEP to recognize sets of strings with a single {@link Category}.</p>
+ *
+ * <p>Where a simple terminal {@link Category} matches only a single token, a
+ * <code>CategorySet</code> matches any of a set of strings.
+ * <p>For example, you could make a set that matched "January", "February", "March", ...</p>
+ *
+ * <p>A set can be an <em>inclusion</em>, where it matches any string that appears
+ * in the set, or an <em>exclusion</em>, where it matches any string that does
+ * not appear in the set.</p>
+ */
 public class CategorySet extends Category {
     private final boolean negated;
     private final List<String> tokens;
 
-    public CategorySet(String name, List<String> tokens, boolean negated, boolean repeatable) {
-        super(name, true, repeatable);
+    private CategorySet(String name, List<String> tokens, boolean negated, boolean optional) {
+        super(name, true, optional);
         this.tokens = tokens;
         this.negated = negated;
     }
 
-    public CategorySet(String name, List<String> tokens, boolean negated) {
-        super(name, true, false);
-        this.tokens = tokens;
-        this.negated = negated;
+    /**
+     * Create a set that matches any one of a set of tokens.
+     * @param name The category name.
+     * @param tokens The list of tokens.
+     * @return A category that matches any one of those tokens.
+     */
+    public static CategorySet inclusion(String name, List<String> tokens) {
+        return new CategorySet(name, tokens, false, false);
     }
 
-    public CategorySet(String name, List<String> tokens) {
-        super(name, true);
-        this.tokens = tokens;
-        negated = false;
+    /**
+     * Create a set that optionally matches any one of a set of tokens.
+     * @param name The category name.
+     * @param tokens The list of tokens.
+     * @param optional Whether or not the category is optional.
+     * @return A category that optionally matches any one of those tokens.
+     */
+    public static CategorySet inclusion(String name, List<String> tokens, boolean optional) {
+        return new CategorySet(name, tokens, false, optional);
+    }
+
+    /**
+     * Create a set that matches any string except a set of tokens.
+     * @param name The category name.
+     * @param tokens The list of tokens.
+     * @return A category that matches any string except one of the specified tokens.
+     */
+    public static CategorySet exclusion(String name, List<String> tokens) {
+        return new CategorySet(name, tokens, true, false);
+    }
+
+    /**
+     * Create a set that optionally matches any string except a set of tokens.
+     * @param name The category name.
+     * @param tokens The list of tokens.
+     * @param optional Whether or not the category is optional.
+     * @return A category that matches any string except one of the specified tokens.
+     */
+    public static CategorySet exclusion(String name, List<String> tokens, boolean optional) {
+        return new CategorySet(name, tokens, false, optional);
     }
 
     /**

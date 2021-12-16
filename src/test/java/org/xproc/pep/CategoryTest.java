@@ -60,7 +60,7 @@ public class CategoryTest extends PepFixture {
 	 */
 	public final void testGetName() {
 		Assert.assertEquals("A", A.getName());
-		Assert.assertEquals("Vowels", Vowels.getName());
+		Assert.assertEquals("Vowel", Vowel.getName());
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class CategoryTest extends PepFixture {
 	public final void testIsTerminal() {
 		Assert.assertEquals(false, A.isTerminal());
 		Assert.assertEquals(true, a.isTerminal());
-		Assert.assertEquals(true, Vowels.isTerminal());
+		Assert.assertEquals(true, Vowel.isTerminal());
 	}
 
 	/**
@@ -78,12 +78,12 @@ public class CategoryTest extends PepFixture {
 	public final void testEqualsObject() {
 		Assert.assertEquals(A, new Category("A", false));
 		Assert.assertFalse(A.equals(new Category("B")));
-		Assert.assertFalse(A.equals(Vowels));
+		Assert.assertFalse(A.equals(Vowel));
 
-		CategorySet vowels = new CategorySet("Vowels", Arrays.asList("A", "E", "I", "O", "U"));
-		CategorySet someVowels = new CategorySet("Vowels", Arrays.asList("A", "E"));
-		Assert.assertTrue(Vowels.equals(vowels));
-		Assert.assertFalse(Vowels.equals(someVowels));
+		CategorySet vowel = CategorySet.inclusion("Vowel", Arrays.asList("A", "E", "I", "O", "U"));
+		CategorySet someVowels = CategorySet.inclusion("Vowels", Arrays.asList("A", "E"));
+		Assert.assertTrue(Vowel.equals(vowel));
+		Assert.assertFalse(Vowel.equals(someVowels));
 	}
 
 	/**
