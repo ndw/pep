@@ -128,17 +128,6 @@ public class DottedRule extends Rule {
 	}
 
 	/**
-	 * Tests if the active charcter is an optional category.
-	 * @return true if and only if the active category exists and is optional.
-	 */
-	public boolean atOptionalCategory() {
-		if (activeCategory == null) {
-			return false;
-		}
-		return activeCategory.isOptional();
-	}
-
-	/**
 	 * Tests whether this dotted rule is equal to another dotted rule by
 	 * comparing their underlying rules and dot positions.
 	 * @return <code>true</code> iff the specified object is an instance of

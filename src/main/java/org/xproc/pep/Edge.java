@@ -131,14 +131,6 @@ public class Edge {
 	}
 
 	/**
-	 * Tests if the current edge is positioned at an optional category.
-	 * @return true if and only if the edge is positioned at an optional category.
-	 */
-	public boolean atOptionalCategory() {
-		return dottedRule.atOptionalCategory();
-	}
-	
-	/**
 	 * Creates an edge based on the given edge and the token that was just
 	 * scanned. 
 	 * @param edge The edge whose active category is the just-scanned token.
@@ -182,21 +174,6 @@ public class Edge {
 		Edge scanEdge = new Edge(DottedRule.advanceDot(edge.dottedRule), edge.origin);
 		scanEdge.bases = Edge.addBasisEdge(edge, edge);
 		
-		return scanEdge;
-	}
-
-	public static Edge skipOptionalToken(Edge edge) {
-		if(edge == null) {
-			throw new NullPointerException("null edge");
-		}
-
-		if(!edge.atOptionalCategory()) {
-			throw new IllegalArgumentException("cannot skip a non-optional token");
-		}
-
-		Edge scanEdge = new Edge(DottedRule.advanceDot(edge.dottedRule), edge.origin);
-		scanEdge.bases = Edge.addBasisEdge(edge, edge);
-
 		return scanEdge;
 	}
 

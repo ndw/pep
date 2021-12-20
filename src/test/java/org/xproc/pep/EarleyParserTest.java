@@ -278,4 +278,7 @@ public class EarleyParserTest extends PepFixture
 
 	@SuppressWarnings("unused")
 	public void optionSet(ParserOptionEvent optionEvent) {}
+
+	@SuppressWarnings("unused")
+	public void tokenConsumed(String token) {}
 }

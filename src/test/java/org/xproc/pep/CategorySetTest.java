@@ -48,12 +48,13 @@ public class CategorySetTest extends PepFixture {
 
         CharacterSet upperAlpha = CharacterSet.range('A', 'Z');
         CharacterSet lowerAlpha = CharacterSet.range('a', 'z');
-        CategoryCharacterSet alphas = CategoryCharacterSet.inclusion("alpha", Arrays.asList(upperAlpha, lowerAlpha), true);
+        CategoryCharacterSet alphas = CategoryCharacterSet.inclusion("alpha", Arrays.asList(upperAlpha, lowerAlpha));
         CategoryCharacterSet digits = CategoryCharacterSet.inclusion("digits", Collections.singletonList(CharacterSet.range('0', '9')));
 
         Category digitLetterDigit = new Category("dld");
 
         grammar.addRule(new Rule(digitLetterDigit, digits, alphas, digits));
+        grammar.addRule(new Rule(digitLetterDigit, digits, digits));
 
         EarleyParser parser = new EarleyParser(grammar);
 

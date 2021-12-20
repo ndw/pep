@@ -361,6 +361,7 @@ public class EarleyParser {
 						
 					String token = tokenIterator.next(); // get next token
 					parse.tokens.add(token); // add to tokens in parse
+					fireTokenConsumed(token);
 					
 					scan(chart, index++, token); // scan and increment index
 					complete(chart, index); // complete for next index
@@ -450,22 +451,12 @@ public class EarleyParser {
 
 			for(Edge edge : edges.toArray(new Edge[edges.size()])) {
 				// completions for active edges only
-				// when considering an edge, if it is currently positioned at an optional
-				// category, also consider the edge where that optional cateogry has been skipped.
-				boolean skipOptional = true;
-				Edge thisEdge = edge;
-				while (skipOptional) {
-					if(thisEdge.canScan(token, ignoreCase)) {
-						Edge newEdge = Edge.scan(thisEdge, token, ignoreCase);
-						Integer successor // save next index
-								= new Integer(index.intValue() + 1);
-						if(chart.addEdge(successor, newEdge)) {
-							fireEdgeScanned(successor, newEdge);
-						}
-					}
-					skipOptional = thisEdge.atOptionalCategory();
-					if (skipOptional) {
-						thisEdge = Edge.skipOptionalToken(thisEdge);
+				if(edge.canScan(token, ignoreCase)) {
+					Edge newEdge = Edge.scan(edge, token, ignoreCase);
+					Integer successor // save next index
+						= new Integer(index.intValue() + 1);
+					if(chart.addEdge(successor, newEdge)) {
+						fireEdgeScanned(successor, newEdge);
 					}
 				}
 			}
@@ -503,18 +494,6 @@ public class EarleyParser {
 									// if the chart did not already contain this edge
 									fireEdgeCompleted(index, newEdge);									
 									completeStack.push(newEdge);
-								}
-
-								// if the new edge is positioned at an optional category, also consider
-								// the edge where that optional category has been skipped.
-								while (newEdge.atOptionalCategory()) {
-									newEdge = Edge.skipOptionalToken(newEdge);
-									if(chart.addEdge(index, newEdge)) {
-										// only notify and recursively complete
-										// if the chart did not already contain this edge
-										fireEdgeCompleted(index, newEdge);
-										completeStack.push(newEdge);
-									}
 								}
 							}
 						}
@@ -557,7 +536,13 @@ public class EarleyParser {
 			listener.edgeScanned(new EdgeEvent(this, index, edge));
 		}
 	}
-	
+
+	private void fireTokenConsumed(String token) {
+		if (listener != null) {
+			listener.tokenConsumed(token);
+		}
+	}
+
 	private void fireEdgeCompleted(Integer index, Edge edge) {
 		if(listener != null) {
 			listener.edgeCompleted(new EdgeEvent(this, index, edge));
