@@ -163,7 +163,15 @@ public class Pep implements ParserListener {
 	public void edgeScanned(EdgeEvent edgeEvent) {
 		Pep.printParser(edgeEvent.index, "scan    ", edgeEvent.edge);
 	}
-	
+
+	/**
+	 * Consumes events generated when the parser consumes a token.
+	 */
+	@Override
+	public void tokenConsumed(String token) {
+		Pep.printMessage("consumed " + token, Pep.V_CHART);
+	}
+
 	/**
 	 * Consumes events generated when the parser completes a parse.
 	 */
@@ -216,7 +224,7 @@ public class Pep implements ParserListener {
 	
 	/**
 	 * Prints an object to System.err.
-	 * @param line The object to print out.
+	 * @param message The object to print out.
 	 * @param requiredVerbosity The required verbosity level for this 
 	 * message to actually be printed out.
 	 */

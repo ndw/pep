@@ -49,8 +49,8 @@ public class CategoryCharacterSet extends Category {
     private final List<CharacterSet> ranges;
     private final boolean inclusion;
 
-    private CategoryCharacterSet(String name, List<CharacterSet> ranges, boolean inclusion, boolean optional) {
-        super(name, true, optional);
+    private CategoryCharacterSet(String name, List<CharacterSet> ranges, boolean inclusion) {
+        super(name, true);
         this.ranges = ranges;
         this.inclusion = inclusion;
     }
@@ -63,7 +63,7 @@ public class CategoryCharacterSet extends Category {
      * @return A character set {@link Category} that matches any character in that range.
      */
     public static CategoryCharacterSet inclusion(String name, CharacterSet range) {
-        return new CategoryCharacterSet(name, Collections.singletonList(range), true, false);
+        return new CategoryCharacterSet(name, Collections.singletonList(range), true);
     }
 
     /**
@@ -73,29 +73,7 @@ public class CategoryCharacterSet extends Category {
      * @return A character set {@link Category} that matches any character in any range.
      */
     public static CategoryCharacterSet inclusion(String name, List<CharacterSet> ranges) {
-        return new CategoryCharacterSet(name, ranges, true, false);
-    }
-
-    /**
-     * Construct a category for an optional character in the given range.
-     * <p>This is a convenience class for the case where you want to match a single range.</p>
-     * @param name The name of the category.
-     * @param range The range.
-     * @return A character set {@link Category} that optionally matches any character in that range.
-     */
-    public static CategoryCharacterSet inclusion(String name, CharacterSet range, boolean optional) {
-        return new CategoryCharacterSet(name, Collections.singletonList(range), true, optional);
-    }
-
-    /**
-     * Construct a category for an optional character in the given range.
-     * <p>This is a convenience class for the case where you want to match a single range.</p>
-     * @param name The name of the category.
-     * @param ranges The ranges.
-     * @return A character set {@link Category} that optionally matches any character in that range.
-     */
-    public static CategoryCharacterSet inclusion(String name, List<CharacterSet> ranges, boolean optional) {
-        return new CategoryCharacterSet(name, ranges, true, optional);
+        return new CategoryCharacterSet(name, ranges, true);
     }
 
     /**
@@ -106,7 +84,7 @@ public class CategoryCharacterSet extends Category {
      * @return A character set {@link Category} that matches any character <em>not</em> in the range.
      */
     public static CategoryCharacterSet exclusion(String name, CharacterSet range) {
-        return new CategoryCharacterSet(name, Collections.singletonList(range), false, false);
+        return new CategoryCharacterSet(name, Collections.singletonList(range), false);
     }
 
     /**
@@ -116,28 +94,7 @@ public class CategoryCharacterSet extends Category {
      * @return A character set {@link Category} that matches any character <em>not</em> in the range.
      */
     public static CategoryCharacterSet exclusion(String name, List<CharacterSet> ranges) {
-        return new CategoryCharacterSet(name, ranges, false, false);
-    }
-
-    /**
-     * Construct a category for an optional character excluded from the given range.
-     * <p>This is a convenience class for the case where you want to match a single range.</p>
-     * @param name The name of the category.
-     * @param range The range.
-     * @return A character set {@link Category} that matches any character <em>not</em> in the range.
-     */
-    public static CategoryCharacterSet exclusion(String name, CharacterSet range, boolean optional) {
-        return new CategoryCharacterSet(name, Collections.singletonList(range), false, optional);
-    }
-
-    /**
-     * Construct a category for an optional character excluded from the given range.
-     * @param name The name of the category.
-     * @param ranges The range.
-     * @return A character set {@link Category} that matches any character <em>not</em> in the range.
-     */
-    public static CategoryCharacterSet exclusion(String name, List<CharacterSet> ranges, boolean optional) {
-        return new CategoryCharacterSet(name, ranges, false, optional);
+        return new CategoryCharacterSet(name, ranges, false);
     }
 
     /**

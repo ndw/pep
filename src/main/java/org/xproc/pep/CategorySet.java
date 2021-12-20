@@ -29,8 +29,8 @@ public class CategorySet extends Category {
     private final boolean negated;
     private final List<String> tokens;
 
-    private CategorySet(String name, List<String> tokens, boolean negated, boolean optional) {
-        super(name, true, optional);
+    private CategorySet(String name, List<String> tokens, boolean negated) {
+        super(name, true);
         this.tokens = tokens;
         this.negated = negated;
     }
@@ -42,18 +42,7 @@ public class CategorySet extends Category {
      * @return A category that matches any one of those tokens.
      */
     public static CategorySet inclusion(String name, List<String> tokens) {
-        return new CategorySet(name, tokens, false, false);
-    }
-
-    /**
-     * Create a set that optionally matches any one of a set of tokens.
-     * @param name The category name.
-     * @param tokens The list of tokens.
-     * @param optional Whether or not the category is optional.
-     * @return A category that optionally matches any one of those tokens.
-     */
-    public static CategorySet inclusion(String name, List<String> tokens, boolean optional) {
-        return new CategorySet(name, tokens, false, optional);
+        return new CategorySet(name, tokens, false);
     }
 
     /**
@@ -63,18 +52,7 @@ public class CategorySet extends Category {
      * @return A category that matches any string except one of the specified tokens.
      */
     public static CategorySet exclusion(String name, List<String> tokens) {
-        return new CategorySet(name, tokens, true, false);
-    }
-
-    /**
-     * Create a set that optionally matches any string except a set of tokens.
-     * @param name The category name.
-     * @param tokens The list of tokens.
-     * @param optional Whether or not the category is optional.
-     * @return A category that matches any string except one of the specified tokens.
-     */
-    public static CategorySet exclusion(String name, List<String> tokens, boolean optional) {
-        return new CategorySet(name, tokens, false, optional);
+        return new CategorySet(name, tokens, true);
     }
 
     /**

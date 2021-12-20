@@ -52,7 +52,13 @@ public interface ParserListener extends EventListener {
 	 * scanning a token.
 	 */
 	public void edgeScanned(EdgeEvent edgeEvent);
-	
+
+	/**
+	 * Notifies a listener that a token has been consumed.
+	 * @param token The token consumed.
+	 */
+	public void tokenConsumed(String token);
+
 	/**
 	 * Notifies a listener that an edge was added to the chart based on
 	 * completion.
